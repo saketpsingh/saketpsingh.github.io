@@ -2,9 +2,7 @@ import { ProjectsData } from '@/components/Projects/ProjectsData'
 import { notFound } from 'next/navigation'
 
 interface PageProps {
-  params: {
-    id: string
-  }
+  params: { id: string }
 }
 
 export default function ProjectPage({ params }: PageProps) {
@@ -57,8 +55,7 @@ export default function ProjectPage({ params }: PageProps) {
 }
 
 // 👇 This tells Next.js which `id`s to pre-render
-export async function generateStaticParams() {
-  return ProjectsData.map((project) => ({
-    id: project.id,
-  }))
+export function generateStaticParams() {
+  return ProjectsData.map((p) => ({ id: p.id }))
 }
+
