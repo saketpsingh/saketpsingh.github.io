@@ -1,13 +1,13 @@
 import { ProjectsData } from '@/components/Projects/ProjectsData'
 import { notFound } from 'next/navigation'
 
-interface Props {
+interface PageProps {
   params: {
     id: string
   }
 }
 
-export default function ProjectPage({ params }: Props) {
+export default function ProjectPage({ params }: PageProps) {
   const project = ProjectsData.find((p) => p.id === params.id)
 
   if (!project) {
@@ -54,4 +54,11 @@ export default function ProjectPage({ params }: Props) {
       </div>
     </main>
   )
+}
+
+// 👇 This tells Next.js which `id`s to pre-render
+export async function generateStaticParams() {
+  return ProjectsData.map((project) => ({
+    id: project.id,
+  }))
 }
