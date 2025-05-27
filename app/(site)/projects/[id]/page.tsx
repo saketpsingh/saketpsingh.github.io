@@ -1,10 +1,33 @@
 import { ProjectsData } from '@/components/Projects/ProjectsData'
 import { notFound } from 'next/navigation'
+import type { Metadata } from 'next'
 
-interface PageProps {
-  params: { id: string }
+type PageProps = {
+  params: {
+    id: string
+  }
 }
 
+// Optional: Generates dynamic metadata for each project
+export async function generateMetadata(
+  { params }: PageProps
+): Promise<Metadata> {
+  const project = ProjectsData.find((p) => p.id === params.id)
+
+  if (!project) return { title: 'Project Not Found' }
+
+  return {
+    title: project.title,
+    description: project.description,
+    openGraph: {
+      title: project.title,
+      description: project.description,
+      images: project.image ? [project.image] : [],
+    }
+  }
+}
+
+// Main Page Component
 export default function ProjectPage({ params }: PageProps) {
   const project = ProjectsData.find((p) => p.id === params.id)
 
@@ -54,8 +77,7 @@ export default function ProjectPage({ params }: PageProps) {
   )
 }
 
-// 👇 This tells Next.js which `id`s to pre-render
+// ✅ Required for static generation of dynamic routes
 export function generateStaticParams() {
   return ProjectsData.map((p) => ({ id: p.id }))
 }
-
