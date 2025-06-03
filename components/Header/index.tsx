@@ -18,7 +18,6 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleStickyMenu);
   }, []);
 
-  // Memoize menu rendering to avoid unnecessary re-renders
   const renderedMenu = useMemo(() => {
     return menuData.map((menuItem, idx) => (
       <li key={idx} className="relative group">
@@ -46,7 +45,7 @@ const Header = () => {
                 <li key={subIdx}>
                   <Link
                     href={subItem.path || "#"}
-                    prefetch={false} // Disable prefetch for dynamic routing
+                    prefetch={false}
                     className="block px-4 py-2 text-sm text-gray-900 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-md"
                   >
                     {subItem.title}
@@ -58,7 +57,7 @@ const Header = () => {
         ) : (
           <Link
             href={menuItem.path || "#"}
-            prefetch={false} // Disable prefetch for dynamic routing
+            prefetch={false}
             className={`px-3 py-2 text-base font-semibold transition duration-200 border-b-2 border-transparent
               ${
                 pathUrl === menuItem.path
@@ -75,14 +74,13 @@ const Header = () => {
 
   return (
     <header
-      className={`fixed left-0 top-0 z-50 w-full transition-all duration-300
-        ${
-          stickyMenu
-            ? "bg-gray-100 shadow-md dark:bg-gray-900"
-            : "bg-gray-50 dark:bg-gray-800"
-        }`}
+      className={`fixed left-0 top-0 z-50 w-full transition-all duration-300 ${
+        stickyMenu
+          ? "bg-gray-100 shadow-md dark:bg-gray-900"
+          : "bg-gray-50 dark:bg-gray-800"
+      }`}
     >
-      <div className="mx-auto max-w-7xl px-6 py-4 flex items-center justify-between">
+      <div className="mx-auto max-w-7xl px-6 py-4 flex items-center justify-between relative">
         {/* Logo */}
         <Link
           href="/"
@@ -92,31 +90,32 @@ const Header = () => {
           <span className="text-gray-900 dark:text-gray-100">Singh</span>
         </Link>
 
-        {/* Hamburger Icon */}
-        <button
-          aria-label="Toggle Navigation"
-          className="xl:hidden flex flex-col justify-between w-6 h-5"
-          onClick={() => setNavigationOpen(!navigationOpen)}
-        >
-          <span
-            className={`h-0.5 bg-gray-900 dark:bg-gray-100 transition-all ${
-              navigationOpen ? "rotate-45 translate-y-2" : ""
-            }`}
-          ></span>
-          <span
-            className={`h-0.5 bg-gray-900 dark:bg-gray-100 transition-all ${
-              navigationOpen ? "opacity-0" : ""
-            }`}
-          ></span>
-          <span
-            className={`h-0.5 bg-gray-900 dark:bg-gray-100 transition-all ${
-              navigationOpen ? "-rotate-45 -translate-y-2" : ""
-            }`}
-          ></span>
-        </button>
+        {/* Right Side (Hamburger + Menu) */}
+        <div className="flex items-center gap-4 ml-auto">
+          {/* Hamburger Icon */}
+          <button
+            aria-label="Toggle Navigation"
+            className="xl:hidden flex flex-col justify-between w-6 h-5 z-50"
+            onClick={() => setNavigationOpen(!navigationOpen)}
+          >
+            <span
+              className={`h-0.5 bg-gray-900 dark:bg-gray-100 transition-all duration-300 ${
+                navigationOpen ? "rotate-45 translate-y-2" : ""
+              }`}
+            ></span>
+            <span
+              className={`h-0.5 bg-gray-900 dark:bg-gray-100 transition-all duration-300 ${
+                navigationOpen ? "opacity-0" : ""
+              }`}
+            ></span>
+            <span
+              className={`h-0.5 bg-gray-900 dark:bg-gray-100 transition-all duration-300 ${
+                navigationOpen ? "-rotate-45 -translate-y-2" : ""
+              }`}
+            ></span>
+          </button>
 
-        {/* Menu Container (right-aligned) */}
-        <div className="ml-auto">
+          {/* Navigation Menu */}
           <nav
             className={`${
               navigationOpen ? "block" : "hidden"
