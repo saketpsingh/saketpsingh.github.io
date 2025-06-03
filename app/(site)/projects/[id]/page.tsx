@@ -1,20 +1,17 @@
-import { ProjectsData } from '@/components/Projects/ProjectsData'
-import { notFound } from 'next/navigation'
-import type { Metadata } from 'next'
+import { ProjectsData } from '@/components/Projects/ProjectsData';
+import { notFound } from 'next/navigation';
+import type { Metadata } from 'next';
 
-type PageProps = {
-  params: {
-    id: string
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const { id } = await params;
+  const project = ProjectsData.find((p) => p.id === id);
+
+  if (!project) {
+    return {
+      title: 'Project Not Found',
+      description: 'The project you are looking for does not exist.',
+    };
   }
-}
-
-// Optional: Generates dynamic metadata for each project
-export async function generateMetadata(
-  { params }: PageProps
-): Promise<Metadata> {
-  const project = ProjectsData.find((p) => p.id === params.id)
-
-  if (!project) return { title: 'Project Not Found' }
 
   return {
     title: project.title,
@@ -23,16 +20,16 @@ export async function generateMetadata(
       title: project.title,
       description: project.description,
       images: project.image ? [project.image] : [],
-    }
-  }
+    },
+  };
 }
 
-// Main Page Component
-export default function ProjectPage({ params }: PageProps) {
-  const project = ProjectsData.find((p) => p.id === params.id)
+export default async function ProjectPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const project = ProjectsData.find((p) => p.id === id);
 
   if (!project) {
-    notFound()
+    notFound();
   }
 
   return (
@@ -57,14 +54,14 @@ export default function ProjectPage({ params }: PageProps) {
 
           {project.technologies && project.technologies.length > 0 && (
             <div className="text-gray-700 dark:text-indigo-400">
-              <span className="font-semibold">Technologies:</span>{" "}
-              {project.technologies.join(", ")}
+              <span className="font-semibold">Technologies:</span>{' '}
+              {project.technologies.join(', ')}
             </div>
           )}
 
           {project.image && (
             <div className="mt-4">
-              <img 
+              <img
                 src={project.image}
                 alt={project.title}
                 className="rounded-lg shadow-md"
@@ -74,10 +71,5 @@ export default function ProjectPage({ params }: PageProps) {
         </div>
       </div>
     </main>
-  )
-}
-
-// ✅ Required for static generation of dynamic routes
-export function generateStaticParams() {
-  return ProjectsData.map((p) => ({ id: p.id }))
+  );
 }

@@ -1,10 +1,10 @@
 import React from "react";
-import { Feature } from "@/types/feature";
+import { TechnicalSkills } from "@/types/technicalskills";
 import Image from "next/image";
 import { motion } from "framer-motion";
 
-const TechnicalSkillCard = ({ feature }: { feature: Feature }) => {
-  const { icon, title, description } = feature;
+const TechnicalSkillCard = ({ technicalskills }: { technicalskills: TechnicalSkills }) => {
+  const { icon, title, description } = technicalskills;
 
   return (
     <motion.div
