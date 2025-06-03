@@ -1,4 +1,16 @@
-const ExperienceTabItem = ({ experience }) => {
+
+interface Experience {
+  company: string;
+  location: string;
+  roles: {
+    title: string;
+    startDate: string;
+    endDate?: string;
+    description?: string[];
+  }[];
+}
+
+const ExperienceTabItem = ({ experience }: { experience: Experience }) => {
   return (
     <div className="space-y-6">
       <h3 className="text-xl font-semibold text-gray-800">

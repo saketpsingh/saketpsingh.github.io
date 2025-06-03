@@ -42,7 +42,7 @@ const Projects = () => {
             <SwiperSlide key={project.id}>
               <Link href={`/projects/${project.id}`}>
                 <SingleProject
-                  review={project}
+                  review={{ ...project, technologies: project.technologies || [], duration: project.duration || "" }}
                   setCardRef={(el) => (cardRefs.current[index] = el)}
                   maxHeight={maxHeight}
                 />

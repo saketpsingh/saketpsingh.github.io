@@ -15,8 +15,8 @@ const TechnicalSkills = () => {
           Technical Skills
         </h2>
         <div className="grid grid-cols-1 gap-7 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 xl:gap-10">
-          {TechnicalSkillsData.map((feature, key) => (
-            <TechnicalSkillCard feature={feature} key={key} />
+          {TechnicalSkillsData.map((technicalSkillsData, key) => (
+            <TechnicalSkillCard technicalskills={technicalSkillsData} key={key} />
           ))}
         </div>
       </div>

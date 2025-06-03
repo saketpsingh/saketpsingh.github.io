@@ -1,6 +1,6 @@
-import { Feature } from "@/types/feature";
+import { TechnicalSkills } from "@/types/technicalskills";
 
-const featuresData: Feature[] = [
+const technicalSkillsData: TechnicalSkills[] = [
   {
     id: 1,
     icon: "/images/icon/icon-01.svg",
@@ -93,4 +93,4 @@ const featuresData: Feature[] = [
   // },
 ];
 
-export default featuresData;
+export default technicalSkillsData;

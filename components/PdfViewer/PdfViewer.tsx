@@ -7,10 +7,10 @@ import 'react-pdf/dist/esm/Page/TextLayer.css';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.mjs`;
 
-export default function PdfViewer({ fileUrl }) {
-  const [numPages, setNumPages] = useState(null);
+export default function PdfViewer({ fileUrl }: { fileUrl: string }) {
+  const [numPages, setNumPages] = useState<number | null>(null);
 
-  const onDocumentLoadSuccess = ({ numPages }) => {
+  const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
     setNumPages(numPages);
   };
 
